@@ -1,6 +1,7 @@
 package hello.upload.file;
 
 import hello.upload.domain.UploadFile;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
+@Slf4j
 public class FileStore {
 
     @Value("${file.dir}")
@@ -38,12 +40,14 @@ public class FileStore {
 
         String originalFilename = multipartFile.getOriginalFilename();
         String storeFileName = createStoreFileName(originalFilename);
+        log.info("storeFile storeFileName={}", storeFileName);
         multipartFile.transferTo(new File(getFullPath(storeFileName)));
         return new UploadFile(originalFilename, storeFileName);
 
     }
 
     private String createStoreFileName(String originalFilename) {
+        log.info("createStoreFileName originalFilename={}", originalFilename);
         String ext = extractExt(originalFilename);
         String uuid = UUID.randomUUID().toString();
         return uuid + "." + ext;
