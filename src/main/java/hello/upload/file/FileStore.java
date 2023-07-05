@@ -40,14 +40,14 @@ public class FileStore {
 
         String originalFilename = multipartFile.getOriginalFilename();
         String storeFileName = createStoreFileName(originalFilename);
-        log.info("storeFile storeFileName={}", storeFileName);
+//        log.info("storeFile storeFileName={}", storeFileName);
         multipartFile.transferTo(new File(getFullPath(storeFileName)));
         return new UploadFile(originalFilename, storeFileName);
 
     }
 
     private String createStoreFileName(String originalFilename) {
-        log.info("createStoreFileName originalFilename={}", originalFilename);
+//        log.info("createStoreFileName originalFilename={}", originalFilename);
         String ext = extractExt(originalFilename);
         String uuid = UUID.randomUUID().toString();
         return uuid + "." + ext;
